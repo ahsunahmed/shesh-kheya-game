@@ -1,0 +1,136 @@
+{
+ "player_male_idle": {
+  "frames": 4,
+  "fps": 4
+ },
+ "player_male_walk": {
+  "frames": 4,
+  "fps": 8
+ },
+ "player_male_jump": {
+  "frames": 4,
+  "fps": 7
+ },
+ "player_male_hurt": {
+  "frames": 4,
+  "fps": 5
+ },
+ "player_male_fall": {
+  "frames": 4,
+  "fps": 4
+ },
+ "player_female_idle": {
+  "frames": 4,
+  "fps": 4
+ },
+ "player_female_walk": {
+  "frames": 8,
+  "fps": 11
+ },
+ "player_female_jump": {
+  "frames": 4,
+  "fps": 6
+ },
+ "player_female_hurt": {
+  "frames": 4,
+  "fps": 5
+ },
+ "player_female_fall": {
+  "frames": 4,
+  "fps": 4
+ },
+ "shop_idle": {
+  "frames": 4,
+  "fps": 6
+ },
+ "hashem_idle": {
+  "frames": 4,
+  "fps": 6
+ },
+ "maleka_idle": {
+  "frames": 4,
+  "fps": 6
+ },
+ "mitu_idle": {
+  "frames": 4,
+  "fps": 6
+ },
+ "jalil_idle": {
+  "frames": 4,
+  "fps": 6
+ },
+ "salma_idle": {
+  "frames": 4,
+  "fps": 6
+ },
+ "karim_hurt": {
+  "frames": 4,
+  "fps": 5
+ },
+ "karim_idle": {
+  "frames": 4,
+  "fps": 6
+ },
+ "robin_idle": {
+  "frames": 4,
+  "fps": 6
+ },
+ "robin_wave": {
+  "frames": 4,
+  "fps": 6
+ },
+ "fox_idle": {
+  "frames": 4,
+  "fps": 6
+ },
+ "fox_run": {
+  "frames": 6,
+  "fps": 12
+ },
+ "fox_walk": {
+  "frames": 4,
+  "fps": 8
+ },
+ "fox_bite": {
+  "frames": 4,
+  "fps": 10
+ },
+ "snake_slither": {
+  "frames": 6,
+  "fps": 10
+ },
+ "bigsnake_idle": {
+  "frames": 4,
+  "fps": 5
+ },
+ "karim_wave": {
+  "frames": 4,
+  "fps": 6
+ },
+ "boat_go_male": {
+  "frames": 4,
+  "fps": 6
+ },
+ "boat_go_female": {
+  "frames": 4,
+  "fps": 6
+ },
+ "boat_back_male": {
+  "frames": 4,
+  "fps": 6
+ },
+ "boat_back_female": {
+  "frames": 4,
+  "fps": 6
+ },
+ "player_male_attack": {
+  "frames": 5,
+  "fps": 14,
+  "loop": false
+ },
+ "player_female_attack": {
+  "frames": 5,
+  "fps": 14,
+  "loop": false
+ }
+}

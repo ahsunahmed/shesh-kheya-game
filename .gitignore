@@ -1,0 +1,43 @@
+# ============================================================
+#  শেষ খেয়ার সংকেত — .gitignore
+#  এই ফোল্ডারগুলো গেম চালাতে/হোস্ট করতে লাগে না — এগুলো মূল (source)
+#  অ্যাসেট, যেগুলোর প্রসেস-করা সংস্করণ assets/img, assets/voice ইত্যাদিতে আছে।
+#  লোকাল ব্যাকআপ হিসেবে রাখলেও GitHub-এ আপলোড/হোস্ট করার দরকার নাই।
+# ============================================================
+
+# --- মূল/কাঁচা অ্যাসেট (গেমে লোড হয় না) ---
+assets/Animals_Props/
+assets/Background_images/
+assets/characters/
+assets/game_intro_images/
+assets/puzzle_elements/
+assets/river_props/
+
+# --- রেফারেন্স/কনসেপ্ট ছবি (root) ---
+/Barisal_*.png
+/character_design_*.png
+
+# --- শুধু-ডেভ (গেম সার্ভ করে না, হোস্টিং-এ লাগে না) ---
+tools/
+tests/
+__pycache__/
+*.pyc
+
+# --- পুরোনো ডিজাইন/অ্যাসেট-নোট (চাইলে এই লাইনগুলো মুছে রিপোতে রাখতে পারো) ---
+/ASSETS_NEEDED.md
+/ASSET_CHECKLIST.md
+/ASSET_SPEC_clips_scenes.md
+/ASSET_SPEC_wrongpaths.md
+/BACKGROUNDS_NEEDED.md
+/DESIGN_REQUESTS.md
+/GAMEPLAY_AND_DIFFICULTY.md
+/PUZZLE_CIRCUIT.md
+/RIVER_RESCUE_DESIGN.md
+
+# --- OS / এডিটর জঞ্জাল ---
+.DS_Store
+Thumbs.db
+*.log
+
+# মনে রাখবে: এই লাইনগুলো মুছে দিলে উপরের ফোল্ডারগুলোও রিপোতে যাবে
+# (প্রাইভেট রিপোতে ব্যাকআপ চাইলে তা করা যায়, কিন্তু পাবলিক হোস্টিং-এ দরকার নাই)।

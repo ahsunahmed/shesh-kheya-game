@@ -1,0 +1,16 @@
+{
+  "name": "শেষ খেয়ার সংকেত",
+  "short_name": "শেষ খেয়া",
+  "description": "বরিশালের এক নদীপাড়ের রহস্য ও উদ্ধারের ২ডি গল্প-খেলা।",
+  "lang": "bn",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "fullscreen",
+  "orientation": "landscape",
+  "background_color": "#0c111d",
+  "theme_color": "#1a2238",
+  "icons": [
+    { "src": "./assets/img/ui/title_logo.png", "sizes": "1080x360", "type": "image/png", "purpose": "any" },
+    { "src": "./assets/img/ui/sound_on.png", "sizes": "256x256", "type": "image/png", "purpose": "any" }
+  ]
+}
