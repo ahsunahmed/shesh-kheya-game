@@ -2,7 +2,7 @@
 // cross: বাঁ→ডান (চরের দিকে)। return: ডান→বাঁ (চর থেকে ঘাটে ফেরা, ভারী নৌকা, ঝড় ও প্রবল স্রোত)।
 // নিরাপদ করিডোর সবসময় খোলা থাকে। return-এ স্রোত এলে সামনে এগোতে forward-বোতাম দ্রুত চাপতে হয়।
 import { Platformer } from '../engine/scene.js';
-import { DIALOGUE } from '../data/dialogue.js';
+import { DIALOGUE, SPEAKERS } from '../data/dialogue.js';
 import { UI as S } from '../data/strings.js';
 import { drawCentered } from '../engine/text.js';
 import * as A from '../engine/art.js';
@@ -50,9 +50,16 @@ export class RiverScene extends Platformer {
       this.G.setObjective(this.ret?'ভারী নৌকা সামলাইয়া ঘাটে ফেরো।':'স্রোত-বাধা বাঁচাইয়া চরে পৌঁছাও।'); return; }
 
     if (this.ret){
-      this.G.ui.startDialogue(DIALOGUE.return_intro, ()=>{ this.phase='ride';
-        this.G.setObjective('স্রোত এলে forward-বোতাম দ্রুত চাপো — ঘাটে ফেরো।');
-        this.G.ui.tip('↑↓ দিয়া বৈঠা সামলাও · স্রোত এলে forward দ্রুত চাপো', 5); });
+      // ফেরার ঝড় — করিম ও রবিনের ভয়ার্ত কথা ব্লক করে না; রাইডের মধ্যে উপরে পপ-আপ হয়ে
+      // নিজে নিজে শোনা যায় (কণ্ঠসহ), তাই খেলোয়াড় একই সাথে নৌকা চালাইতে পারে।
+      this.phase='ride';
+      this.G.setObjective('স্রোত এলে forward-বোতাম দ্রুত চাপো — ঘাটে ফেরো।');
+      this.G.ui.tip('↑↓ দিয়া বৈঠা সামলাও · স্রোত এলে forward দ্রুত চাপো', 5);
+      this.speeches=[
+        {at:2.2, s:'karim', t:'নদীতে স্রোত অনেক! সাবধানে চালা, আরে জোরে বইঠা বাও!'},
+        {at:9.5, s:'robin', t:'আল্লাহই ভালো জানে আজকে বাঁচবো কিনা!'},
+      ];
+      this._speechT=0;
     } else {
       // মিতু আগেই ঘাটে কথা বলেছে — এখানে সরাসরি বাওয়া শুরু
       this.phase='ride';
@@ -83,8 +90,20 @@ export class RiverScene extends Platformer {
     // ঝড়: বজ্রপাত + মেঘডাক
     if (this.ret){ this.thunderCd-=dt; if (this.thunderCd<=0){ this.thunderCd=1.8+Math.random()*2.2; this.lightning=0.6; this.G.audio.sfx('thunder'); } }
     if (blocked) return;
-    if (this.phase==='ride') this._ride(dt);
+    if (this.phase==='ride'){ this._ride(dt); this._updateSpeeches(dt); }
     else if (this.phase==='dock') this._dock(dt);
+  }
+
+  // ফেরার ঝড়ে করিম-রবিনের ভয়ার্ত কথা — উপরে পপ-আপ + কণ্ঠ, নৌকা-চালনা থামে না
+  _updateSpeeches(dt){
+    if (!this.speeches || !this.speeches.length) return;
+    this._speechT += dt;
+    if (this._speechT >= this.speeches[0].at){
+      const sp=this.speeches.shift();
+      const nm=(SPEAKERS[sp.s]||{}).name || '';
+      this.G.ui.tip((nm?nm+' — ':'')+sp.t, 5.5);
+      this.G.voice && this.G.voice.speak(sp.t, sp.s);
+    }
   }
 
   // নৌকা ঘাটে ভেড়ানো — ঠিক জায়গায় নিয়ে কিছুক্ষণ রাখলে (বা E চাপলে) নামা

@@ -404,7 +404,7 @@ export class UIManager {
 
   _drawPause(ctx){
     ctx.fillStyle='rgba(8,10,18,0.8)'; ctx.fillRect(0,0,this.W,this.H);
-    const w=440, h=496, x=(this.W-w)/2, y=(this.H-h)/2;
+    const w=440, h=560, x=(this.W-w)/2, y=(this.H-h)/2;
     ctx.fillStyle='#161d30'; rr(ctx,x,y,w,h,16); ctx.fill(); ctx.strokeStyle='#f2c879'; ctx.lineWidth=2; ctx.stroke();
     drawCentered(ctx,S.paused,x+w/2,y+40,28,'#f2c879',700);
     this.buttons=[];
@@ -427,9 +427,11 @@ export class UIManager {
     // resume / checkpoint / menu
     const mk=(label,oy,col,act)=>{ const b={x:x+40,y:oy,w:w-80,h:46}; ctx.fillStyle=col; rr(ctx,b.x,b.y,b.w,b.h,10); ctx.fill();
       drawCentered(ctx,label,b.x+b.w/2,b.y+23,18,'#f1e8d4',700); this.buttons.push({...b,action:act}); };
-    mk(S.resume, y+256, '#3f7a46', ()=>this.pauseToggle());
-    mk(S.toCheckpoint, y+312, '#24304c', ()=>{ this.paused=false; this.G.respawnCheckpoint(); });
-    mk(S.toMenu, y+368, '#24304c', ()=>{ this.paused=false; this.G.goMenu(); });
+    const fsOn=this.G.isFullscreen&&this.G.isFullscreen();
+    mk('পূর্ণ-পর্দা (Fullscreen)'+(fsOn?' ✓':''), y+252, '#3a5a7a', ()=>{ this.G.toggleFullscreen&&this.G.toggleFullscreen(); });
+    mk(S.resume, y+308, '#3f7a46', ()=>this.pauseToggle());
+    mk(S.toCheckpoint, y+364, '#24304c', ()=>{ this.paused=false; this.G.respawnCheckpoint(); });
+    mk(S.toMenu, y+420, '#24304c', ()=>{ this.paused=false; this.G.goMenu(); });
     if (this.G.input.pressed('pause')) this.pauseToggle();
   }
 

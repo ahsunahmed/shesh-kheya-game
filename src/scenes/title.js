@@ -22,6 +22,7 @@ export class TitleScene {
     if (this.showCredits && (I.pressed('pause'))) this.showCredits=false;
   }
   async _start(){
+    this.G.requestFullscreen && this.G.requestFullscreen();   // ট্যাপেই পূর্ণ-পর্দা (ব্রাউজার-বার লুকায়)
     await this.G.audio.unlock();
     this.G.audio.setAmbience('rain'); this.G.audio.setMusic_mood('calm');
     this.state='menu';

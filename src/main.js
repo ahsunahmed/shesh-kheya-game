@@ -104,6 +104,18 @@ const G = {
     this.changeScene(tgt);
   },
   goMenu(){ this.audio.setAmbience('quiet'); this.audio.setMusic_mood('calm'); this.changeScene('title'); },
+  // ---- পূর্ণ-পর্দা (ব্রাউজারের অ্যাড্রেস-বার/মেনু লুকায়, খেলা পুরো স্ক্রিন জুড়ে) ----
+  isFullscreen(){ return !!(document.fullscreenElement || document.webkitFullscreenElement); },
+  requestFullscreen(){
+    const el=document.documentElement;
+    const fn=el.requestFullscreen||el.webkitRequestFullscreen||el.msRequestFullscreen;
+    if (fn){ try{ const p=fn.call(el); if(p&&p.catch) p.catch(()=>{}); }catch(e){} }
+    try{ if (screen.orientation && screen.orientation.lock) screen.orientation.lock('landscape').catch(()=>{}); }catch(e){}
+    setTimeout(()=>{ try{ resize(); }catch(e){} }, 120);
+  },
+  exitFullscreen(){ const fn=document.exitFullscreen||document.webkitExitFullscreen||document.msExitFullscreen;
+    if (fn){ try{ fn.call(document); }catch(e){} } },
+  toggleFullscreen(){ this.isFullscreen()? this.exitFullscreen() : this.requestFullscreen(); },
   newGame(){ this.state.clues=new Set(); this.state.flags={}; this.state.hp=3; Save.clear(); this.changeScene('intro'); },
 };
 G.ui = new UIManager(G);
@@ -124,7 +136,10 @@ function resize(){
   G._dpr=canvas.width/W;                 // খেলার ১২৮০×৭২০ স্থানাঙ্ক → ব্যাকিং পিক্সেল
 }
 window.addEventListener('resize', resize);
-window.addEventListener('orientationchange', resize); resize();
+window.addEventListener('orientationchange', resize);
+document.addEventListener('fullscreenchange', resize);
+document.addEventListener('webkitfullscreenchange', resize);
+resize();
 
 // ---- loop ----
 let last=performance.now();
