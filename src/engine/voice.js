@@ -1,6 +1,6 @@
 // মানব-কণ্ঠ সংলাপ।
-// অগ্রাধিকার: (১) আগে-থেকে-তৈরি কণ্ঠ-ক্লিপ (assets/voice/<id>.mp3 — ElevenLabs/বরিশালি উচ্চারণ)।
-//            (২) না থাকলে ডিভাইসের বাংলা TTS। (৩) তাও না থাকলে নীরব (শুধু লেখা)।
+// শুধু আগে-থেকে-রেকর্ড-করা কণ্ঠ-ক্লিপ বাজে (assets/voice/<id>.mp3)।
+// ক্লিপ না থাকলে (যেমন খেলোয়াড়ের লাইন) নীরব থাকে — ডিভাইসের রোবটিক TTS ব্যবহার করা হয় না।
 import { Save } from './save.js';
 
 const PROFILE = {
@@ -41,8 +41,8 @@ export class Voice {
   }
   _pickBn(){ const v=this.voices;
     return v.find(x=>/^bn([-_]|$)/i.test(x.lang)) || v.find(x=>/bengali|bangla|বাংলা/i.test(x.name)) || null; }
-  // ডিভাইসে বাংলা কণ্ঠ বা তৈরি ক্লিপ — কিছু একটা শোনানো যাবে কি না
-  available(){ return Object.keys(this.clipMap).length>0 || (this.supported && !!this.bn); }
+  // শুধু রেকর্ড-করা ক্লিপ থাকলেই কণ্ঠ শোনানো যাবে (ডিভাইস TTS ব্যবহার করা হয় না)
+  available(){ return Object.keys(this.clipMap).length>0; }
 
   _profile(speaker){
     if (speaker==='player') return this.G && this.G.gender==='female' ? {pitch:1.28,rate:1.02} : {pitch:0.95,rate:1.0};
@@ -63,17 +63,9 @@ export class Voice {
         return;
       }catch(e){}
     }
-    // (২) বাংলা TTS
-    if (this.supported){
-      if (!this.bn) this.bn=this._pickBn();
-      if (this.bn){ try{
-        const u=new SpeechSynthesisUtterance(text);
-        u.voice=this.bn; u.lang=this.bn.lang||'bn-IN';
-        const p=this._profile(speaker); u.pitch=p.pitch; u.rate=p.rate; u.volume=1;
-        this.cur=u; window.speechSynthesis.speak(u);
-      }catch(e){} }
-    }
-    // (৩) নীরব — লেখা দেখা যাবে
+    // (২) রেকর্ড-করা ক্লিপ না থাকলে নীরব — শুধু লেখা দেখা যাবে।
+    // (ডিভাইসের রোবটিক TTS ইচ্ছাকৃতভাবে বাদ: খেলোয়াড়সহ যেসব লাইনের ক্লিপ নাই,
+    //  সেগুলো TTS দিয়ে না পড়ে চুপ থাকবে — মোবাইলে অভিজ্ঞতা ভালো রাখতে।)
   }
   stop(){
     if (this.supported){ try{ window.speechSynthesis.cancel(); }catch(e){} }
